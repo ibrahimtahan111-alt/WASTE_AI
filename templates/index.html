@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <!-- Author -->
+    <meta name="author" content="Themes Industry" />
+    <!-- description -->
+    <meta
+      name="description"
+      content="MegaOne is a highly creative, modern, visually stunning and Bootstrap responsive multipurpose studio and portfolio HTML5 template with 8 ready home page demos."
+    />
+    <!-- keywords -->
+    <meta
+      name="keywords"
+      content="Creative, modern, clean, bootstrap responsive, html5, css3, portfolio, blog, studio, templates, multipurpose, one page, corporate, start-up, studio, branding, designer, freelancer, carousel, parallax, photography, studio, masonry, grid, faq"
+    />
+    <!-- Page Title -->
+    <title>WasteAI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="creative-studio/img/favicon.ico" />
+    <!-- Bundle -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/bundle.min.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="128x128"
+      href="{{ url_for('static', filename='img/favicon-128x128.png') }}"
+    />
+
+    <!-- Plugin Css -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/jquery.fancybox.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.carousel.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/swiper.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/cubeportfolio.min.css') }}"
+    />
+    <!-- Slick CSS Files -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/slick.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/css/slick-theme.css') }}"
+    />
+    <!-- Style Sheet -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- Custom Style CSS File -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+  </head>
+
+  <body data-spy="scroll" data-target=".navbar-nav" data-offset="90">
+    <!-- Loader -->
+    <div class="loader" id="loader-fade">
+      <div class="loader-container">
+        <div class="circle"></div>
+      </div>
+    </div>
+    <!-- Loader ends -->
+
+    <!-- Header start -->
+ <header>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(0, 0, 0, 0.4)">
+    <div class="container-fluid">
+      <!-- Left: Logo -->
+      <a class="navbar-brand fw-bold me-auto" href="{{ url_for('index') }}">♻ WasteAI</a>
+
+      <!-- Center: Nav Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link text-white" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#work">Input Detection</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#live-detection">Live Detection</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('history_page') }}">History</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#whatsapp-feature">Whatsapp</a></li>
+        </ul>
+      </div>
+
+      <!-- Right: User Section -->
+      <div class="d-flex align-items-center ms-auto">
+        {% if current_user.is_authenticated %}
+        <span class="nav-link text-white me-3">
+          👋 Welcome, <strong>{{ current_user.email }}</strong>
+        </span>
+        <a href="{{ url_for('logout') }}" class="nav-link text-white" title="Logout">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+        </a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-sm btn-primary me-2">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-sm btn-success">Sign Up</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+    <!-- Header end -->
+
+    <!-- Main Section start -->
+    <section id="home" class="p-0 particles-version center-block">
+      <h2 class="d-none">hidden</h2>
+      
+        <div class="bg-overlay bg-gradient"></div>
+        <div class="not-fullscreen">
+          <div class="col-lg-12 text-center center-col">
+            <div class="personal-box">
+              <!-- Project Logo / Illustration -->
+              <div class="myphoto mb-3">
+                <img
+                  src="{{ url_for('static', filename='img/transparent_logo.png') }}"
+                  alt="WasteAI Logo"
+                  style="max-width: 260px"
+                />
+              </div>
+
+              <!-- Project Title & Tagline -->
+              <div class="color-white">
+                <h1 class="fw-bold">♻️ WasteAI</h1>
+                <h3 class="mt-2">
+                  Smart Waste Detection & Recycling Assistant
+                </h3>
+                <p
+                  class="mt-3 text-light"
+                  style="max-width: 600px; margin: auto"
+                >
+                  Real-time AI-powered detection of recyclable, hazardous, and
+                  non-recyclable materials using your camera or uploaded images.
+                </p>
+
+                <!-- Call-to-action -->
+                <div class="mt-4">
+                  <a href="#live-detection" class="btn btn-success btn-lg me-2">
+                    🚀 Try Live Detection
+                  </a>
+                  <a href="#about" class="btn btn-outline-light btn-lg">
+                    Learn More
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Section end -->
+
+    <!-- Features start -->
+    <section id="features" class="py-5 bg-light-gray">
+      <div class="container">
+        <!-- Title -->
+        <div class="row">
+          <div class="col text-center">
+            <div class="main-title wow fadeIn" data-wow-delay="300ms">
+              <h5 class="text-success">Why WasteAI?</h5>
+              <h2 class="fw-bold">Powerful Features</h2>
+              <p class="text-muted mx-auto" style="max-width: 600px">
+                WasteAI helps you identify recyclable, hazardous, and
+                non-recyclable materials in real-time using advanced AI
+                detection.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="row align-items-center mt-4">
+          <!-- Image/Illustration -->
+          <div
+            class="col-lg-6 col-md-6 mb-4 wow fadeInLeft"
+            data-wow-delay="400ms"
+          >
+            <img
+              src="{{ url_for('static', filename='img/image44.png') }}"
+              alt="WasteAI Features"
+              class="img-fluid rounded shadow"
+            />
+          </div>
+
+          <!-- Features List -->
+          <div
+            class="col-lg-5 col-md-6 mx-auto wow fadeInRight"
+            data-wow-delay="500ms"
+          >
+            <!-- Feature 1 -->
+            <div class="feature-item d-flex mb-3">
+              <div class="laptop-features-icon me-3">
+                <span class="icon"
+                  ><i class="fa fa-camera color-summer-sky"></i
+                ></span>
+              </div>
+              <div class="features-content">
+                <h5 class="fw-bold mb-1">Realtime Detection</h5>
+                <p class="text-muted mb-0">
+                  Detect objects instantly using your webcam or image uploads.
+                </p>
+              </div>
+            </div>
+<!-- Feature 4 -->
+<div class="feature-item d-flex mb-3">
+  <div class="laptop-features-icon me-3">
+    <span class="icon"><i class="fab fa-whatsapp text-success"></i></span>
+  </div>
+  <div class="features-content">
+    <h5 class="fw-bold mb-1">WhatsApp Integration</h5>
+    <p class="text-muted mb-0">
+      Snap and send photos directly via WhatsApp to instantly classify your waste.
+    </p>
+  </div>
+</div>
+
+<!-- Feature 5 -->
+<div class="feature-item d-flex mb-3">
+  <div class="laptop-features-icon me-3">
+    <span class="icon"><i class="fa fa-chart-line color-summer-sky"></i></span>
+  </div>
+  <div class="features-content">
+    <h5 class="fw-bold mb-1">Eco Impact Stats</h5>
+    <p class="text-muted mb-0">
+      Track your recycling history and personal contribution to sustainability.
+    </p>
+  </div>
+</div>
+
+<!-- Feature 6 -->
+<div class="feature-item d-flex">
+  <div class="laptop-features-icon me-3">
+    <span class="icon"><i class="fa fa-map-marker-alt text-danger"></i></span>
+  </div>
+  <div class="features-content">
+    <h5 class="fw-bold mb-1">Nearby Facilities</h5>
+    <p class="text-muted mb-0">
+      Get directions to the closest recycling or waste disposal centers.
+    </p>
+  </div>
+</div>
+
+            <!-- Feature 2 -->
+            <div class="feature-item d-flex mb-3">
+              <div class="laptop-features-icon me-3">
+                <span class="icon"
+                  ><i class="fa fa-recycle color-summer-sky"></i
+                ></span>
+              </div>
+              <div class="features-content">
+                <h5 class="fw-bold mb-1">Smart Classification</h5>
+                <p class="text-muted mb-0">
+                  AI automatically labels items as recyclable, hazardous, or
+                  non-recyclable.
+                </p>
+              </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-item d-flex">
+              <div class="laptop-features-icon me-3">
+                <span class="icon"
+                  ><i class="fa fa-magic color-summer-sky"></i
+                ></span>
+              </div>
+              <div class="features-content">
+                <h5 class="fw-bold mb-1">Simple & Intuitive</h5>
+                <p class="text-muted mb-0">
+                  Easy-to-use interface designed for everyone, no setup needed.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Features ends -->
+
+    <!-- Stats start -->
+  <section class="stats bg-light-gray">
+  <h2 class="d-none">heading</h2>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-lg-12 col-md-12 col-sm-12 text-center wow fadeIn"
+        data-wow-delay="300ms"
+      >
+        <div class="main-title mb-md-5 wow fadeIn" data-wow-delay="300ms">
+          <h5>Our Impact So Far</h5>
+          <h2>WasteAI by the Numbers</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Total Detections -->
+      <div class="col-md-4 col-sm-12 stats-box mb-xs-2rem">
+        <div class="serial-box center-block wow zoomIn" data-wow-delay="400ms">
+          <i class="fa fa-camera" aria-hidden="true"></i>
+          <p class="pt-3 pb-3 numscroller">1250</p>
+          <h6 class="mb-0">Detections Analyzed</h6>
+        </div>
+      </div>
+
+      <!-- Recyclable Items -->
+      <div class="col-md-4 col-sm-12 stats-box mb-xs-2rem">
+        <div class="serial-box center-block wow zoomIn" data-wow-delay="500ms">
+          <i class="fa fa-recycle" aria-hidden="true"></i>
+          <p class="pt-3 pb-3 numscroller">1020</p>
+          <h6 class="mb-0">Recyclable Items Identified</h6>
+        </div>
+      </div>
+
+      <!-- Registered Users -->
+      <div class="col-md-4 col-sm-12 stats-box mb-xs-2rem">
+        <div class="serial-box center-block wow zoomIn" data-wow-delay="600ms">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <p class="pt-3 pb-3 numscroller">145</p>
+          <h6 class="mb-0">Active Users</h6>
+        </div>
+      </div>
+
+      <!-- Hazardous Waste -->
+      <div class="col-md-4 col-sm-12 stats-box sm-mt-2rem mb-xs-2rem">
+        <div class="serial-box center-block wow zoomIn" data-wow-delay="700ms">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <p class="pt-3 pb-3 numscroller">910</p>
+          <h6 class="mb-0">Hazardous Items Detected</h6>
+        </div>
+      </div>
+
+      <!-- Facilities Linked -->
+      <div class="col-md-4 col-sm-12 stats-box mt-md-2rem">
+        <div class="serial-box center-block wow zoomIn" data-wow-delay="800ms">
+          <i class="fa fa-map-marker-alt" aria-hidden="true"></i>
+          <p class="pt-3 pb-3 numscroller">47</p>
+          <h6 class="mb-0">Recycling Facilities Linked</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Stats ends -->
+
+   
+    <!-- Video ends -->
+
+    <!-- Work Starts -->
+    <section id="work" class="portfolio-two">
+      <div class="container">
+        <!-- Title -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="main-title mb-2rem wow fadeIn" data-wow-delay="300ms">
+              <h2>Waste Detection</h2>
+              <p>
+                Upload a photo of waste, and our AI model will analyze it to
+                detect objects, identify whether they are recyclable, hazardous,
+                or non-recyclable, and display the results instantly.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="container text-center">
+          <h3 class="mb-4">Upload an Image for Detection</h3>
+          <form id="detection-form" enctype="multipart/form-data" class="mb-4">
+            <div class="upload-area p-4 border rounded shadow-sm text-center">
+              <i class="fa fa-cloud-upload fa-2x text-summer-sky mb-3"></i>
+              <p class="mb-2">Drag & Drop an image here or</p>
+
+              <!-- Custom File Input -->
+              <label class="btn btn-outline-primary btn-sm">
+                <input
+                  type="file"
+                  id="image-input"
+                  name="image"
+                  accept="image/*"
+                  hidden
+                  required
+                />
+                Browse File
+              </label>
+
+              <button type="submit" class="btn btn-summer-sky ms-2">
+                <i class="fa fa-search"></i> Detect Waste
+              </button>
+
+              <div class="mt-2">
+                <small class="form-text text-muted">
+                  Supported formats: JPG, PNG, WEBP. Max size: 10MB.
+                </small>
+              </div>
+            </div>
+
+            <!-- Preview section -->
+            <div
+              id="preview-container"
+              class="mt-3 text-center"
+              style="display: none"
+            >
+              <p class="text-muted mb-2">📸 Selected Image Preview:</p>
+              <img
+                id="preview-img"
+                class="img-fluid shadow rounded"
+                style="max-width: 250px"
+              />
+            </div>
+          </form>
+
+          <!-- Output Section -->
+          <div
+            id="detection-output"
+            class="d-flex flex-wrap justify-content-center mt-4"
+          >
+            <!-- Image Preview -->
+            <div id="detection-preview" class="flex-grow-1 me-4 mb-3">
+              <h5 class="text-muted">Detection Preview</h5>
+              <p class="small text-secondary">
+                Your uploaded image and annotated results will appear here.
+              </p>
+            </div>
+
+            <!-- Results -->
+            <div id="detection-results" class="flex-grow-1">
+              <h5 class="text-muted">Detections</h5>
+              <p class="small text-secondary">
+                Detected objects and their categories will be listed here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work ends -->
+
+    <!-- Pricing start -->
+    <section id="live-detection" class="bg-light-gray py-5">
+      <div class="container">
+        <!-- Title -->
+        <div class="row mb-4">
+          <div class="col text-center">
+            <div class="main-title wow fadeIn" data-wow-delay="300ms">
+              <h2 class="fw-bold">🎥 Live Detection</h2>
+              <p class="text-muted">
+                Use your webcam for real-time waste detection. The camera will
+                pause automatically when confident detections are found, so you
+                can review results and save snapshots.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Left: Camera -->
+          <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+              <div id="webcam-container" class="text-center">
+                <!-- Buttons row -->
+                <div class="mb-2">
+                  <button id="start-webcam" class="btn btn-primary">
+                    ▶️ Start Webcam Detection
+                  </button>
+                  <button id="stop-webcam" class="btn btn-danger d-none">
+                    ⏹️ Stop Camera
+                  </button>
+                  <button id="resume-webcam" class="btn btn-success d-none">
+                    Continue Detection
+                  </button>
+                  <button id="restart-webcam" class="btn btn-warning d-none">
+                    🔄 Start Again
+                  </button>
+                </div>
+
+                <!-- Camera feed -->
+                <div id="webcam-feed" class="mb-2">
+                  <p class="text-muted">Camera not started.</p>
+                </div>
+
+                <!-- Snapshot button goes here -->
+                <div id="snapshot-controls"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Detections -->
+          <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100">
+              <div class="card-body p-2 d-flex flex-column">
+                <!-- Header controls -->
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2"
+                >
+                  <span>
+                    <span
+                      id="status-dot"
+                      class="rounded-circle bg-danger d-inline-block"
+                      style="height: 12px; width: 12px"
+                    ></span>
+                    <small id="status-text" class="text-muted">Paused</small>
+                  </span>
+
+                  <div class="d-flex align-items-center gap-2">
+                    <label
+                      for="threshold-range"
+                      class="form-label mb-0 small text-muted"
+                      >Confidence:</label
+                    >
+                    <input
+                      type="range"
+                      id="threshold-range"
+                      min="0.3"
+                      max="0.9"
+                      step="0.05"
+                      value="0.6"
+                    />
+                    <span id="threshold-value" class="small">0.6</span>
+                  </div>
+
+                  <button
+                    id="clear-history"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Clear detections"
+                  >
+                    🗑️ Clear
+                  </button>
+                </div>
+
+                <!-- Detection list -->
+                <h6 class="fw-bold">Detections</h6>
+                <ul
+                  id="webcam-detections"
+                  class="list-group flex-grow-1 overflow-auto"
+                  style="max-height: 300px"
+                ></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing ends -->
+
+    <!-- Clients start -->
+    <!-- WhatsApp Feature -->
+<section id="whatsapp-feature" class="py-5 bg-white">
+  <div class="container">
+    <div class="row align-items-center">
+      
+      <!-- Left: Text -->
+      <div class="col-md-8 mb-4 mb-md-0">
+        <h5 class="text-success">New!</h5>
+        <h2 class="fw-bold mb-3">WhatsApp Integration</h2>
+        <p class="text-muted">
+          Interact with WasteAI directly from WhatsApp.  
+          Snap a photo of waste and send it via WhatsApp —
+          our AI will analyze and guide you instantly.
+        </p>
+        
+        <p class="fw-bold mt-3">📱 Let’s get started with this feature:</p>
+        <p class="text-muted">
+          Scan the QR code beside to connect and try it now.
+        </p>
+        
+        <a href="https://wa.me/14155238886?text=Hello%20WasteAI" 
+           target="_blank" class="btn btn-success mt-2">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+
+      <!-- Right: QR Code -->
+      <div class="col-md-4 text-center" style="max-width: fit-content">
+        <div class="card shadow-sm border-0 p-4">
+          <img src="{{ url_for('static', filename='img/whatsapp_qr.svg') }}"
+               alt="WhatsApp QR Code"
+               class="img-fluid"
+               style="max-width: 250px;">
+          <p class="small text-muted mt-2">Scan with your WhatsApp app</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- Brands ends -->
+
+    <!-- Footer starts -->
+    <footer class="p-half bg-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 text-center">
+            <ul class="footer-icons mb-4">
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInUp facebook"
+                  ><i class="fab fa-facebook-f"></i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInDown twitter"
+                  ><i class="fab fa-x-twitter"></i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInUp google"
+                  ><i class="fab fa-google"></i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInDown linkedin"
+                  ><i class="fab fa-linkedin-in"></i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInUp instagram"
+                  ><i class="fab fa-instagram"></i>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="wow fadeInDown pinterest"
+                  ><i class="fab fa-pinterest-p"></i>
+                </a>
+              </li>
+            </ul>
+            <p class="copyrights mt-2 mb-2">
+  &copy; 2025 <strong>WasteAI</strong>. Built with ♻️ by Jad Salameh and Ibrahim Tahan.
+</p>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer ends -->
+
+    <!--Animated Cursor-->
+    <div id="animated-cursor">
+      <div id="cursor">
+        <div id="cursor-loader"></div>
+      </div>
+    </div>
+    <!--Animated Cursor End-->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="recycleToast" class="toast" role="alert" data-bs-delay="7000">
+        <div class="toast-header">
+          <span class="me-2">♻️</span>
+          <strong class="me-auto">Recycling Tip</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+        <div class="toast-body">
+          This item is recyclable!
+          <a href="#" id="openMap" class="text-success fw-bold"
+            >Find nearby facilities →</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Recycling Map Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nearby Recycling Facilities</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="map" style="height: 500px; width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/js/bundle.min.js') }}"></script>
+
+    <!-- Plugin Js -->
+    <script src="{{ url_for('static', filename='vendor/js/jquery.fancybox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/swiper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/jquery.cubeportfolio.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/jquery.appear.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/parallaxie.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/js/wow.min.js') }}"></script>
+
+    <!-- Page Specific JS -->
+    <script src="{{ url_for('static', filename='js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/particles.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.matchHeight-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/typewriter.js') }}"></script>
+
+    <!-- Google Map Api -->
+    <script src="{{ url_for('static', filename='js/maps.min.js') }}"></script>
+
+    <!-- Custom script -->
+    <script src="{{ url_for('static', filename='vendor/js/contact_us.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/detection.js') }}"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places&callback=initMap"
+    ></script>
+    <script>
+      function initMap() {
+        const beirut = { lat: 33.8938, lng: 35.5018 }; // test location
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: beirut,
+        });
+
+        new google.maps.Marker({
+          position: beirut,
+          map: map,
+          title: "Beirut Center",
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+flask>=3.0.0,<4
+flask-sqlalchemy>=3.1.0,<4
+flask-login>=0.6.3,<1
+ultralytics>=8.3.0,<9
+opencv-python>=4.8.0,<5
+openai>=1.40.0,<2
+twilio>=9.0.0,<10
+apscheduler>=3.10.0,<4
+python-dotenv>=1.0.0,<2
+tenacity>=8.2.0,<10
+requests>=2.31.0,<3
+Pillow>=10.0.0,<12
+SQLAlchemy>=2.0.0,<3
+Werkzeug>=3.0.0,<4
+# On Windows CPU machines, install torch first if needed:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu

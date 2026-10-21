@@ -1,0 +1,85 @@
+<div class="modal fade" id="detectionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detection Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="detection-details">Loading...</div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-success" id="open-map-btn" data-bs-toggle="modal" data-bs-target="#mapModal" disabled>
+          🌍 Find Nearby Facility
+        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Map Modal -->
+<div class="modal fade" id="mapModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">♻️ Recycling Facilities</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body position-relative">
+        
+        <!-- 📍 My Location Button -->
+        <div class="position-absolute" style="top:10px; right:10px; z-index:5;">
+          <button id="btn-my-location" class="btn btn-sm btn-primary">
+            📍 My Location
+          </button>
+        </div>
+
+        <div class="row">
+          <!-- Sidebar with Tabs -->
+          <div class="col-md-4">
+            <ul class="nav nav-tabs" id="facilityTabs">
+              <li class="nav-item">
+                <button class="nav-link active" id="tab-nearby" data-bs-toggle="tab" data-bs-target="#tab-nearby-list">
+                  Nearby
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="tab-favorites" data-bs-toggle="tab" data-bs-target="#tab-favorites-list">
+                  ⭐ Favorites
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content mt-2">
+              <!-- Nearby Facilities -->
+              <div class="tab-pane fade show active" id="tab-nearby-list">
+                <div class="mb-2">
+                  <label class="form-label">Filter by material:</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="plastic" checked> Plastic</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="metal" checked> Metal</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="e-waste" checked> E-waste</label>
+                </div>
+                <ul id="facility-list" class="list-group small"></ul>
+              </div>
+
+              <!-- Favorites -->
+              <div class="tab-pane fade" id="tab-favorites-list">
+                <ul id="favorites-list" class="list-group small"></ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map + Street View -->
+          <div class="col-md-8">
+            <div id="map" style="height:400px; width:100%;"></div>
+            <div id="street-view" style="height:200px; width:100%; margin-top:10px;"></div>
+          </div>
+        </div>
+
+        <div id="map-info" class="mt-3 small text-muted"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/history_map.js') }}"></script>

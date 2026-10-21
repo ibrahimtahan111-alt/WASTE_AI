@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign Up - WasteAI</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="128x128"
+      href="{{ url_for('static', filename='img/favicon-128x128.png') }}"
+    />
+
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        background: #f9f9f9;
+      }
+      .signup-container {
+        display: flex;
+        height: 100vh;
+      }
+      .image-side {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-right: 1px solid #eee;
+      }
+      .image-side img {
+        max-width: 80%;
+        height: auto;
+      }
+      .form-side {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+      }
+      .form-wrapper {
+        width: 100%;
+        max-width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-container">
+      <!-- Left: Illustration -->
+      <div class="image-side">
+        <img
+          src="{{ url_for('static', filename='img/signup-illustration.svg') }}"
+          alt="Signup Illustration"
+        />
+      </div>
+
+      <!-- Right: Signup Form -->
+      <div class="form-side">
+        <div class="form-wrapper">
+          <!-- Logo -->
+          <div class="text-center mb-4">
+            <img
+              src="{{ url_for('static', filename='img/transparent_logo.png') }}"
+              alt="WasteAI Logo"
+              style="max-width: 150px"
+            />
+          </div>
+
+          <h4 class="mb-1">Welcome to WasteAI!</h4>
+          <p class="mb-4">
+            Create your account to start detecting and tracking waste items.
+          </p>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} py-2" role="alert">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <form method="POST" action="/signup">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                placeholder="Your Email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone (WhatsApp)</label>
+              <input
+                type="text"
+                name="phone"
+                class="form-control"
+                placeholder="+96170123456"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="·········"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Repeat Password</label>
+              <input
+                type="password"
+                name="confirm"
+                class="form-control"
+                placeholder="·········"
+                required
+              />
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" required />
+              <label class="form-check-label">
+                I agree to all statements in <a href="#">Terms of service</a>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              Register
+            </button>
+          </form>
+
+          <p class="mt-4 text-center">
+            Already a member? <a href="/login">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

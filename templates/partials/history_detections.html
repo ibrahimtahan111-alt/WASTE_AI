@@ -1,0 +1,260 @@
+<div class="mb-3 d-flex flex-wrap gap-2 align-items-center"> 
+  <!-- Category Filter -->
+  <select id="filter-category" class="form-select form-select-sm" style="max-width:180px;">
+    <option value="All">All Categories</option>
+    <option value="Recyclable">♻️ Recyclable</option>
+    <option value="Hazardous">☣️ Hazardous</option>
+    <option value="Non-Recyclable">🚮 Non-Recyclable</option>
+  </select>
+
+  <!-- Label Search -->
+  <input type="text" id="filter-label" class="form-control form-control-sm"
+         placeholder="🔍 Search label..." style="max-width:200px;">
+
+  <!-- Date Range -->
+  <input type="date" id="filter-start" class="form-control form-control-sm">
+  <span class="mx-1">to</span>
+  <input type="date" id="filter-end" class="form-control form-control-sm">
+
+  <!-- Apply Button -->
+  <button class="btn btn-sm btn-primary" id="filter-apply">Apply</button>
+  <button class="btn btn-sm btn-outline-secondary" id="filter-reset">Reset</button>
+
+  <!-- Export -->
+  <div class="ms-auto">
+    <button class="btn btn-sm btn-outline-success" id="export-csv">⬇️ Export CSV</button>
+    <button class="btn btn-sm btn-outline-info" id="export-excel">⬇️ Export Excel</button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped align-middle" id="detections-table">
+    <thead class="table-light">
+      <tr>
+        <th>Timestamp</th>
+        <th>Label</th>
+        <th>Category</th>
+        <th>Snapshot</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filled dynamically -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Detection Modal -->
+<div class="modal fade" id="detectionModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detection Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="detection-details">Loading...</div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-success" id="open-map-btn" data-bs-toggle="modal" data-bs-target="#mapModal" disabled>
+          🌍 Find Nearby Facility
+        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Map Modal -->
+<div class="modal fade" id="mapModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">♻️ Recycling Facilities</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body position-relative">
+        <div class="position-absolute" style="top:10px; right:10px; z-index:5;">
+          <button id="btn-my-location" class="btn btn-sm btn-primary">
+            📍 My Location
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="nav nav-tabs" id="facilityTabs">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-nearby-list">Nearby</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-favorites-list">⭐ Favorites</button>
+              </li>
+            </ul>
+            <div class="tab-content mt-2">
+              <div class="tab-pane fade show active" id="tab-nearby-list">
+                <div class="mb-2">
+                  <label class="form-label">Filter by material:</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="plastic" checked> Plastic</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="metal" checked> Metal</label><br>
+                  <label><input type="checkbox" class="facility-filter" value="e-waste" checked> E-waste</label>
+                </div>
+                <ul id="facility-list" class="list-group small"></ul>
+              </div>
+              <div class="tab-pane fade" id="tab-favorites-list">
+                <ul id="favorites-list" class="list-group small"></ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div id="map" style="height:400px; width:100%;"></div>
+            <div id="street-view" style="height:200px; width:100%; margin-top:10px;"></div>
+          </div>
+        </div>
+        <div id="map-info" class="mt-3 small text-muted"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const tableBody = document.querySelector("#detections-table tbody");
+  let currentRows = [];
+
+  function loadDetections() {
+    const category = document.getElementById("filter-category").value;
+    const label = document.getElementById("filter-label").value;
+    const start = document.getElementById("filter-start").value;
+    const end = document.getElementById("filter-end").value;
+
+    const params = new URLSearchParams({ category, label, start, end });
+    fetch(`/api/history?${params.toString()}`)
+      .then(r => r.json())
+      .then(rows => {
+        currentRows = rows;
+        tableBody.innerHTML = "";
+
+        if (!rows.length) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-muted text-center">No detections found.</td></tr>`;
+          return;
+        }
+
+        rows.forEach(d => {
+          const badge = d.category === "Recyclable"
+            ? `<span class="badge bg-success">♻️ Recyclable</span>`
+            : d.category === "Hazardous"
+              ? `<span class="badge bg-danger">☣️ Hazardous</span>`
+              : `<span class="badge bg-secondary">🚮 Non-Recyclable</span>`;
+
+          tableBody.innerHTML += `
+            <tr>
+              <td>${d.timestamp}</td>
+              <td>${d.label}</td>
+              <td>${badge}</td>
+              <td>${d.snapshot ? `<img src="${d.snapshot}" class="img-thumbnail" style="max-width:80px;">` : `<span class="text-muted">No snapshot</span>`}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detectionModal" data-id="${d.id}">View</button>
+              </td>
+            </tr>`;
+        });
+      });
+  }
+
+  // CSV export
+  document.getElementById("export-csv").addEventListener("click", () => {
+    if (!currentRows.length) return alert("No data to export");
+    let csv = "Timestamp,Label,Confidence,Category\n";
+    currentRows.forEach(d => csv += `"${d.timestamp}","${d.label}",${d.confidence},"${d.category}"\n`);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "detections.csv"; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Excel export
+  document.getElementById("export-excel").addEventListener("click", () => {
+    if (!currentRows.length) return alert("No data to export");
+    let table = `<table><tr><th>Timestamp</th><th>Label</th><th>Confidence</th><th>Category</th></tr>`;
+    currentRows.forEach(d => table += `<tr><td>${d.timestamp}</td><td>${d.label}</td><td>${d.confidence}%</td><td>${d.category}</td></tr>`);
+    table += `</table>`;
+    const blob = new Blob([table], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "detections.xls"; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Apply/reset filters
+  document.getElementById("filter-apply").addEventListener("click", loadDetections);
+  document.getElementById("filter-reset").addEventListener("click", () => {
+    document.getElementById("filter-category").value = "All";
+    document.getElementById("filter-label").value = "";
+    document.getElementById("filter-start").value = "";
+    document.getElementById("filter-end").value = "";
+    loadDetections();
+  });
+
+  // Modal with suggestions
+  const detectionModal = document.getElementById("detectionModal");
+  detectionModal.addEventListener("show.bs.modal", async (event) => {
+    const btn = event.relatedTarget;
+    const detId = btn.getAttribute("data-id");
+    const detailsDiv = document.getElementById("detection-details");
+    const mapBtn = document.getElementById("open-map-btn");
+    detailsDiv.innerHTML = "⏳ Loading...";
+    mapBtn.disabled = true;
+
+    try {
+      const res = await fetch(`/api/detection/${detId}`);
+      const d = await res.json();
+      const params = new URLSearchParams({ label: d.label, category: d.category, confidence: d.confidence });
+      if (navigator.geolocation) {
+        try {
+          const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { timeout: 5000 }));
+          params.set("lat", pos.coords.latitude); params.set("lng", pos.coords.longitude);
+        } catch (_) {}
+      }
+      let suggestion = null;
+      try {
+        const sRes = await fetch(`/api/suggest?${params.toString()}`);
+        suggestion = await sRes.json();
+      } catch (_) {}
+      const badge = d.category === "Recyclable" ? `<span class="badge bg-success">♻️</span>`
+        : d.category === "Hazardous" ? `<span class="badge bg-danger">☣️</span>`
+        : `<span class="badge bg-secondary">🚮</span>`;
+      detailsDiv.innerHTML = `
+        <p><strong>${d.label}</strong> ${badge}</p>
+        <p class="text-muted small mb-2">${d.timestamp || ""}</p>
+        ${d.snapshot_path ? `<img src="${d.snapshot_path}" class="img-fluid rounded mb-3">` : (d.snapshot ? `<img src="${d.snapshot}" class="img-fluid rounded mb-3">` : "")}
+        <hr>
+        <h6>Suggestions</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <strong>Prep:</strong><ul>${(suggestion?.prep || []).map(p => `<li>${p}</li>`).join("")}</ul>
+            <strong>Checklist:</strong><ul>${(suggestion?.checklist || []).map(c => `<li>${c}</li>`).join("")}</ul>
+          </div>
+          <div class="col-md-6">
+            <strong>Reuse:</strong><ul>${(suggestion?.reuse || []).map(r => `<li>${r}</li>`).join("")}</ul>
+            <strong>Warnings:</strong><ul>${(suggestion?.warnings || []).map(w => `<li>${w}</li>`).join("")}</ul>
+          </div>
+        </div>
+        <div class="mt-3"><strong>Nearest Facility:</strong><br>
+          ${
+            suggestion?.nearest
+              ? `<p><b>${suggestion.nearest.name}</b><br>${suggestion.nearest.address}<br>${suggestion.nearest.distance_km} km away<br>
+                 <a href="https://www.google.com/maps/dir/?api=1&destination=${suggestion.nearest.lat},${suggestion.nearest.lng}" target="_blank" class="btn btn-sm btn-outline-success mt-1">🚗 Route</a></p>`
+              : `<span class="text-muted">No nearby facility found</span>`
+          }
+        </div>`;
+      mapBtn.disabled = false;
+      mapBtn.dataset.label = d.label;
+      mapBtn.dataset.category = d.category;
+    } catch {
+      detailsDiv.innerHTML = `<p class="text-danger">Error loading details</p>`;
+    }
+  });
+
+  // initial load
+  loadDetections();
+});
+</script>
+
+<script src="{{ url_for('static', filename='js/history_map.js') }}"></script>

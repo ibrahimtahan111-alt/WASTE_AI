@@ -1,0 +1,169 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-3">
+  <h3 class="mb-3">📊 Waste Action Dashboard</h3>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs" id="historyTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="tab-detections"
+        data-bs-toggle="tab"
+        data-bs-target="#detections"
+        type="button"
+        role="tab"
+      >
+        Detections
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="tab-impact"
+        data-bs-toggle="tab"
+        data-bs-target="#impact"
+        type="button"
+        role="tab"
+      >
+        Impact
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="tab-facilities"
+        data-bs-toggle="tab"
+        data-bs-target="#facilities"
+        type="button"
+        role="tab"
+      >
+        Facilities
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="tab-badges"
+        data-bs-toggle="tab"
+        data-bs-target="#badges"
+        type="button"
+        role="tab"
+      >
+        Badges & Leaderboard
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Panes -->
+  <div class="tab-content border border-top-0 p-3 bg-white">
+    <!-- Detections -->
+    <div class="tab-pane fade show active" id="detections" role="tabpanel">
+      {% include "partials/history_detections.html" %}
+    </div>
+
+    <!-- Impact -->
+  <!-- Impact -->
+<div class="tab-pane fade" id="impact" role="tabpanel">
+  <!-- KPI Cards -->
+  <div class="row g-3 mb-3">
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">Total Detections</div><div id="impact-total" class="h4 mb-0">0</div></div></div>
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">Kg Recycled</div><div id="impact-kg" class="h4 mb-0">0 kg</div></div></div>
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">CO₂ Saved</div><div id="impact-co2" class="h4 mb-0">0 kg</div></div></div>
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">Trees Saved</div><div id="impact-trees" class="h4 mb-0">0</div></div></div>
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">Energy Saved</div><div id="impact-energy" class="h4 mb-0">0 kWh</div></div></div>
+    <div class="col-md-2"><div class="card p-3"><div class="small text-muted">Water Saved</div><div id="impact-water" class="h4 mb-0">0 L</div></div></div>
+  </div>
+
+  <!-- Charts (Pie + Trend) -->
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card p-3"><div id="impact-pie" style="height:280px;"></div></div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <div class="d-flex justify-content-end mb-2">
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-outline-secondary" id="trend-week">This Week</button>
+            <button class="btn btn-outline-secondary" id="trend-month">This Year</button>
+          </div>
+        </div>
+        <div id="impact-trend" style="height:280px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Extra Charts -->
+  <div class="row g-3 mt-1">
+    <div class="col-md-12">
+      <div class="card p-3"><h6 class="mb-2">Breakdown by Category (Monthly)</h6><div id="impact-stacked" style="height:320px;"></div></div>
+    </div>
+    <div class="col-md-12">
+      <div class="card p-3"><h6 class="mb-2">Top Detected Items</h6><div id="impact-toplabels" style="height:320px;"></div></div>
+    </div>
+    <div class="col-md-12">
+      <div class="card p-3"><h6 class="mb-2">Activity Calendar</h6><div id="impact-heatmap" style="height:320px;"></div></div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Facilities -->
+    <div class="tab-pane fade" id="facilities" role="tabpanel">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="mb-1">♻️ Recycling Facilities</h5>
+          <p class="text-muted small mb-0">Saved centers from your database (Lebanon).</p>
+        </div>
+        <input type="search" id="facility-search" class="form-control form-control-sm" style="max-width:260px;" placeholder="Search name, city, material…">
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle" id="facilities-table">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Accepts</th>
+              <th>Phone</th>
+              <th>Pickup</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" class="text-muted text-center">Loading facilities…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="tab-pane fade" id="badges" role="tabpanel">
+      <h5>🏅 My Badges</h5>
+      <div id="badges-list" class="d-flex flex-wrap gap-3 mb-4"></div>
+
+      <h5>🌍 Leaderboard</h5>
+      <table class="table table-striped" id="leaderboard-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Detections</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Keep the modals (details, map) outside -->
+{% include "partials/history_modals.html" %}
+<script src="{{ url_for('static', filename='js/history_map.js') }}"></script>
+
+<!-- Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+<script src="{{ url_for('static', filename='js/history_impact.js') }}"></script>
+<script src="{{ url_for('static', filename='js/history_badges.js') }}"></script>
+<script src="{{ url_for('static', filename='js/history_facilities.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=places"></script>
+{% endblock %}

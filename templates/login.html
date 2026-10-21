@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - WasteAI</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="128x128"
+      href="{{ url_for('static', filename='img/favicon-128x128.png') }}"
+    />
+
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        background: #f9f9f9;
+      }
+      .login-container {
+        display: flex;
+        height: 100vh;
+      }
+      .image-side {
+        flex: 6; /* bigger side */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        border-right: 1px solid #eee;
+        padding: 2rem;
+      }
+      .image-side img {
+        max-width: 60%; /* smaller image */
+        height: auto;
+      }
+      .form-side {
+        flex: 4; /* smaller side */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+      }
+      .form-wrapper {
+        width: 100%;
+        max-width: 360px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <!-- Left: illustration -->
+      <div class="image-side">
+        <img
+          src="{{ url_for('static', filename='img/login-illustration.svg') }}"
+          alt="Login Illustration"
+        />
+      </div>
+
+      <!-- Right: login form -->
+      <div class="form-side">
+        <div class="form-wrapper">
+          <!-- Logo -->
+          <div class="text-center mb-4">
+            <img
+              src="{{ url_for('static', filename='img/transparent_logo.png') }}"
+              alt="WasteAI Logo"
+              style="max-width: 150px"
+            />
+          </div>
+
+          <h4 class="mb-1">Welcome back! 👋</h4>
+          <p class="mb-4">
+            Sign in to continue detecting and managing waste with AI.
+          </p>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} py-2" role="alert">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <form method="POST" action="/login">
+            <div class="mb-3">
+              <label class="form-label">Email or Phone</label>
+              <input
+                type="text"
+                name="email"
+                class="form-control"
+                placeholder="Enter your email or phone"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="·········"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+          </form>
+
+          <p class="mt-4 text-center">
+            New here? <a href="/signup">Create an account</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

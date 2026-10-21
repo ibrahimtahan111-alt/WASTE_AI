@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Recycle Beirut",
+    "lat": 33.8886,
+    "lng": 35.4955,
+    "category": "Recyclable",
+    "description": "Collects plastics, paper, and cans.",
+    "contact": "+961 70 123 456"
+  },
+  {
+    "name": "EcoServe Lebanon",
+    "lat": 33.8940,
+    "lng": 35.5010,
+    "category": "Recyclable",
+    "description": "Drop-off for recyclables in Beirut.",
+    "contact": "+961 1 987 654"
+  },
+  {
+    "name": "Beeatoona E-Waste Center",
+    "lat": 33.8925,
+    "lng": 35.5018,
+    "category": "Hazardous",
+    "description": "Handles e-waste, batteries, and electronics.",
+    "contact": "+961 3 456 789"
+  },
+  {
+    "name": "Municipal Waste Drop-off",
+    "lat": 33.8910,
+    "lng": 35.4965,
+    "category": "Non-Recyclable",
+    "description": "Municipal center for general waste disposal.",
+    "contact": "+961 1 222 333"
+  }
+]

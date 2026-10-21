@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+instance/*.db
+static/uploads/results/
+*.log
+.DS_Store
+
+# Large dataset images (keep annotations + scripts)
+datasets/taco/images/
+datasets/TACO-src/
+datasets/taco/download_log.txt
+datasets/taco/download_stdout.txt
+datasets/taco/download_stderr.txt
+datasets/taco/download_unofficial_log.txt
+datasets/taco/download_unofficial_stdout.txt
+datasets/taco/download_unofficial_stderr.txt
+datasets/taco/train_stdout.txt
+datasets/taco/train_stderr.txt
+datasets/yolo_taco/images/
+datasets/yolo_taco/labels/
+datasets/yolo_taco_colab.zip
+runs/
